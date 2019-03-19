@@ -1,0 +1,9 @@
+CLIENT_ID: ''
+CLIENT_SECRET: ''
+REDIRECT_URI: ''
+OAUTH_URL: ''
+BASE_URL: ''
+
+# Copy these keys into your followed application.yml file. The application.yml file is created after the installation of the Figaro gem (see Readme for more instructions)
+# You can then place the corresponding values in this file to be used as environment variables.
+# Treat the Client ID and Client Secret like a username/password combination; do not share or publish these values!

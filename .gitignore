@@ -1,0 +1,16 @@
+
+# Ignore application configuration and secrets.yml
+/config/application.yml
+/config/secrets.yml
+
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+./tmp/*
+
+# Ignore Mac-specific system files
+.DS_Store
+.AppleDouble
+.LSOverride

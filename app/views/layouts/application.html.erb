@@ -1,0 +1,27 @@
+<!-- This code is intended to be used **for training purposes only**. -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sample ROR App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div class="container">
+        <ul class="nav nav-tabs">
+          <% if session[:oauth_response] %>
+            <li><%= link_to "Home", users_home_path %></li>
+            <li><%= link_to "Sign Out", login_revoke_path %></li>
+          <% else %>
+            <li><%= link_to "Sign In", login_index_path %></li>
+          <% end %>
+        </ul>
+
+      <%= yield %>
+    </div>
+  </body>
+</html>

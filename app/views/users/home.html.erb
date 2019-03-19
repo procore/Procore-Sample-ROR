@@ -1,0 +1,36 @@
+<!-- This code is intended to be used **for training purposes only**. -->
+<head>
+  <% flash.each do |key, value| %>
+    <div class='alert alert-<%= key %>' >
+      <%= value %>
+      </div>
+  <% end %>
+</head>
+
+<table>
+  <tr>
+    <th>Access Token</th>
+    <th>Created At</th>
+    <th>Expires At</th>
+    <th>Refresh Token
+    </th>
+  </tr>
+  </tr>
+    <td><%= @access_token[0..4] + "..." + @access_token.split(//).last(5).join%></td>
+    <td><%= @pretty_created_at %></td>
+    <td><%= @pretty_expires_at %></td>
+    <td><%= @refresh_token[0..4] + "..." + @refresh_token.split(//).last(5).join %></td>
+  </tr>
+</table>
+
+<div class="me-button">
+  <%= link_to "Show User Information", users_me_path, method: :get, class: :button %>
+</div>
+
+<div class="refresh-button">
+  <%= link_to "Refresh Your Access Token", login_refresh_path, method: :post, class: :button%>
+</div>
+
+<div class="revoke-button">
+  <%= link_to "Revoke Your Access Token", login_revoke_path, method: :get, class: :button%>
+</div>

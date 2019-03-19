@@ -1,0 +1,16 @@
+<!-- This code is intended to be used **for training purposes only**. -->
+<table>
+    <tr>
+      <th>User ID</th>
+      <th>User Email</th>
+    </tr>
+  <div>
+    <tr>
+      <td><%= @me['id'] %></td>
+      <td><%= @me['login']%></td>
+    </tr>
+</table>
+
+<div class="home-button">
+  <%= link_to "Go Back to Home Page", users_home_path, method: :get, class: :button %>
+</div>
