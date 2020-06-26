@@ -34,3 +34,40 @@
 <div class="revoke-button">
   <%= link_to "Revoke Your Access Token", login_revoke_path, method: :get, class: :button%>
 </div>
+
+<br/>
+<h1>Make a Procore API Request</h1>
+<%= form_with(url: '/users/home', method: 'get', local: true) do %>
+  <div class="form-group">
+    <label for="path">Path:</label>
+    <input id="path" type="text" name="path"></input>
+  </div>
+
+  <div class="form-group">
+    <label for="body">Body:</label>
+    <input id="body" type="textarea" name="body"></input>
+  </div>
+
+  <div class="form-group">
+    <label for="method">Method:</label>
+    <select id="method" type="text" name="method">
+      <option value="get">GET</option>
+      <option value="post">POST</option>
+    </select>
+  </div>
+
+  <input type="submit" class="btn btn-primary"></input>
+<% end %>
+
+<br/>
+<pre id="json-response"></pre>
+
+<script>
+  const resp = '<%= @resp.to_json.html_safe %>';
+
+  document.getElementById("json-response").textContent = JSON.stringify(
+    JSON.parse(resp),
+    undefined,
+    2
+  );
+</script>

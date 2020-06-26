@@ -39,11 +39,43 @@ class UsersController < ApplicationController
     # an instance variable
     @refresh_token = session[:oauth_response]['refresh_token']
 
+    # If proxy Procore request params are present, make the request
+    if params[:path]
+      begin
+        @resp = procore_request(@access_token, params[:path], params[:method], params[:body])
+      rescue => e
+        @resp = e.message
+      end
+    end
+
     rescue RestClient::ExceptionWithResponse
       if session[:oauth_response]
         redirect_to users_home_path, danger: "Something went wrong. Please refresh your access token and try again."
       else
         redirect_to login_index_path, danger: "Something went wrong. Please try again."
     end
-end
+  end
+
+  private
+
+  def procore_request(token, path, method, body)
+    resp = case method
+      when 'post'
+        RestClient.post(
+          ENV['BASE_URL'] + path,
+          body ? JSON.parse(body) : nil,
+          { Authorization: "Bearer #{session[:oauth_response]['access_token']}" }
+        )
+      when 'get'
+        resp = RestClient.get(
+          ENV['BASE_URL'] + path,
+          { Authorization: "Bearer #{session[:oauth_response]['access_token']}" }
+        )
+      else
+        nil
+    end
+
+
+    JSON.parse(resp)
+  end
 end
