@@ -40,12 +40,12 @@
 <%= form_with(url: '/users/home', method: 'get', local: true) do %>
   <div class="form-group">
     <label for="path">Path:</label>
-    <input id="path" type="text" name="path"></input>
+    <input id="path" type="text" name="path" placeholder="/vapid/me"></input>
   </div>
 
   <div class="form-group">
     <label for="body">Body:</label>
-    <input id="body" type="textarea" name="body"></input>
+    <input id="body" type="textarea" name="body" placeholder="{}"></input>
   </div>
 
   <div class="form-group">

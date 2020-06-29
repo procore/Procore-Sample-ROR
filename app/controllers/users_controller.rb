@@ -72,7 +72,7 @@ class UsersController < ApplicationController
           { Authorization: "Bearer #{session[:oauth_response]['access_token']}" }
         )
       else
-        nil
+        ''
     end
 
 
