@@ -1,4 +1,4 @@
 <!-- This code is intended to be used **for training purposes only**. -->
 <div>
-  <%= link_to 'Sign In To Procore', "#{ENV['OAUTH_URL']}/oauth/authorize?client_id=#{ENV['CLIENT_ID']}&response_type=code&redirect_uri=#{ENV['REDIRECT_URI']}", :class => "button"%>
+  <%= button_to "Sign In To Procore", "/auth/procore", method: :post, class: "button" %>
 </div>

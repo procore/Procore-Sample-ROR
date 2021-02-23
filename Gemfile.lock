@@ -82,6 +82,7 @@ GEM
       thor (~> 0.14)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    hashie (4.1.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     httparty (0.18.1)
@@ -124,6 +125,18 @@ GEM
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
+    omniauth (2.0.2)
+      hashie (>= 3.4.6)
+      rack (>= 1.6.2, < 3)
+      rack-protection
+    omniauth-oauth2 (1.7.1)
+      oauth2 (~> 1.4)
+      omniauth (>= 1.9, < 3)
+    omniauth-procore (0.6.0)
+      omniauth-oauth2 (>= 1.1.1, < 2.0)
+    omniauth-rails_csrf_protection (1.0.0)
+      actionpack (>= 4.2)
+      omniauth (~> 2.0)
     procore (1.0.0)
       activesupport (> 2.4)
       oauth2 (~> 1.4)
@@ -134,6 +147,8 @@ GEM
     public_suffix (4.0.3)
     puma (3.12.6)
     rack (2.2.3)
+    rack-protection (2.1.0)
+      rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (5.1.7)
@@ -235,6 +250,9 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails
   listen
+  omniauth
+  omniauth-procore
+  omniauth-rails_csrf_protection
   procore (~> 1.0)
   pry
   puma (~> 3.12)

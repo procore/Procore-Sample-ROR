@@ -10,15 +10,15 @@
 <table>
   <tr>
     <th>Access Token</th>
-    <th>Created At</th>
     <th>Expires At</th>
+    <th>Expires In</th>
     <th>Refresh Token
     </th>
   </tr>
   </tr>
     <td><%= @access_token[0..4] + "..." + @access_token.split(//).last(5).join%></td>
-    <td><%= @pretty_created_at %></td>
     <td><%= @pretty_expires_at %></td>
+    <td><%= @expires_in %> seconds</td>
     <td><%= @refresh_token[0..4] + "..." + @refresh_token.split(//).last(5).join %></td>
   </tr>
 </table>

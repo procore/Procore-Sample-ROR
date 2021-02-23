@@ -11,6 +11,8 @@ Rails.application.routes.draw do
 
   get 'login/callback'
 
+  get 'auth/procore/callback', to: 'login#callback'
+
   get 'login/revoke'
 
   root 'login#index'
