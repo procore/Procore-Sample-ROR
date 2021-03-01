@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   def me
     # Send a request to the Show User Info endpoint
     # Reference documentation: https://developers.procore.com/reference/me
-    get_me = RestClient.get(ENV['BASE_URL'] +'/vapid/me',
+    get_me = RestClient.get(ENV['BASE_URL'] +'/rest/v1.0/me',
             { Authorization: "Bearer #{session[:oauth_response]['access_token']}" })
 
     # Store the parsed response in an instance variable

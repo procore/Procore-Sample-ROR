@@ -18,7 +18,7 @@ Within this file, configure your application's Client ID, Client Secret, and Red
         * OAUTH_URL: ''
         * BASE_URL: ''
 
-    * Client ID and Client Secret values are provided when [creating an application](https://developers.procore.com/documentation/new-application) in the Procore Developer Portal. The redirect URI above should be added to your application, which can be done on your application's home page.
+    * Client ID and Client Secret values are provided when [creating an application](https://developers.procore.com/documentation/new-application) in the Procore Developer Portal. The redirect URI above should be added to your application.
     * The BASE_URL and the OAUTH_URL will depend on which environment you're working accessing. If you're working in the production environment, the OAUTH_URL will be https://login.procore.com and the BASE_URL will be https://api.procore.com. For the sandbox environment, both the OAUTH_URL and the BASE_URL should be set to https://sandbox.procore.com.
     * After these values have been configured within the `application.yml` file, make sure to save your changes.
 
