@@ -43,11 +43,20 @@ class LoginController < ApplicationController
 
     store = Procore::Auth::Stores::Session.new(session: session)
     store.save(token)
-    redirect_to users_home_path
+    redirect_to users_home_path, success: "Access token granted."
+  rescue Procore::Error
+    redirect_to login_index_path, danger: "Something went wrong. Please try again."
   end
 
 
   def refresh
+      # Send a request to refresh the access token to Procore and store the response
+      client.refresh
+      # Redirect the user's browser to the intended home page
+      redirect_to users_home_path, success: "Access token refreshed successfully."
+    rescue Procore::Error
+      redirect_to login_index_path, danger: "Something went wrong. Please try again."
+
     # # Populate the request body with the defined parameters from the docs
     # # Reference documentation: https://developers.procore.com/reference/authentication
     # request = {
@@ -79,7 +88,7 @@ class LoginController < ApplicationController
     # Deletes current session to clear out session variables
     reset_session
     # Redirects user back to the login page
-    redirect_to login_index_path, success: "Token was successfully revoked"
+    redirect_to login_index_path, success: "Access token revoked successfully."
   rescue Procore::Error
     redirect_to login_index_path, danger: "Something went wrong. Please try again."
   end
