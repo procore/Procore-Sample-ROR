@@ -1,5 +1,6 @@
 # This code is intended to be used **for training purposes only**.
 class UsersController < ApplicationController
+  before_action :ensure_logged_in
 
   def me
     # Send a request to the Show User Info endpoint
@@ -29,43 +30,38 @@ class UsersController < ApplicationController
     # # an instance variable
     @refresh_token = procore_token['refresh_token']
 
-    # # If proxy Procore request params are present, make the request
-    # if params[:path]
-    #   begin
-    #     @resp = procore_request(@access_token, params[:path], params[:method], params[:body])
-    #   rescue => e
-    #     @resp = e.message
-    #   end
-    # end
+    # If proxy Procore request params are present, make the request
+    if params[:path]
+      begin
+        @resp = procore_request(@access_token, params[:path], params[:method], params[:body], params[:version])
+      rescue => e
+        @resp = e.message
+      end
+    end
+  end
 
-    # rescue RestClient::ExceptionWithResponse
-    #   if session[:oauth_response]
-    #     redirect_to users_home_path, danger: "Something went wrong. Please refresh your access token and try again."
-    #   else
-    #     redirect_to login_index_path, danger: "Something went wrong. Please try again."
-    # end
+  def ensure_logged_in
+    unless session['procore_token'] 
+      redirect_to login_index_path, warning: "Please log in."
+    end
   end
 
   private
 
-  def procore_request(token, path, method, body)
-    # resp = case method
-    #   when 'post'
-    #     RestClient.post(
-    #       ENV['BASE_URL'] + path,
-    #       body ? JSON.parse(body) : nil,
-    #       { Authorization: "Bearer #{session[:oauth_response]['access_token']}" }
-    #     )
-    #   when 'get'
-    #     resp = RestClient.get(
-    #       ENV['BASE_URL'] + path,
-    #       { Authorization: "Bearer #{session[:oauth_response]['access_token']}" }
-    #     )
-    #   else
-    #     ''
-    # end
+  def procore_request(token, path, method, body, version)
+    version = nil if version.empty?
 
+    resp = case method
+      when 'get'
+        client.get path, version: version
+      when 'post'
+        client.post path, body: JSON.parse(body), version: version
+      when 'patch'
+        client.patch path, body: JSON.parse(body), version: version
+      when 'delete'
+        client.delete path, body: JSON.parse(body), version: version
+    end
 
-    # JSON.parse(resp)
+    resp.body
   end
 end

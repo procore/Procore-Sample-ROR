@@ -2,7 +2,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
-  add_flash_types :danger, :success
+  add_flash_types :danger, :success, :warning
 
   def client
     @client ||= Procore::Client.new(
