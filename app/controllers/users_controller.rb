@@ -8,12 +8,8 @@ class UsersController < ApplicationController
     # Store the parsed response in an instance variable
     @me = request.body
 
-    # rescue RestClient::ExceptionWithResponse
-    #   if session[:oauth_response]
-    #     redirect_to users_home_path, danger: "Something went wrong. Please check or refresh your access token and try again."
-    #   else
-    #     redirect_to login_index_path, danger: "Something went wrong. Please try again."
-    #   end
+  rescue Procore::Error
+    flash[:danger] = "Something went wrong. Please try again."
   end
 
   def home
