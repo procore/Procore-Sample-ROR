@@ -1,4 +1,4 @@
-# This code is intended to be used **for training purposes only**.# For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+# This code is intended to be used **for training purposes only**.
 Rails.application.routes.draw do
   root 'login#index'
 
@@ -15,4 +15,6 @@ Rails.application.routes.draw do
   end
 
   get 'auth/procore/callback', to: 'login#callback'
+
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
