@@ -26,8 +26,8 @@ class UsersController < ApplicationController
     @pretty_expires_at = Time.at(expires_at).asctime
     @expires_in = expires_at - Time.now.to_i
 
-    # # Fetch the access token from the session variable and store the value in
-    # # an instance variable
+    # Fetch the access token from the session variable and store the value in
+    # an instance variable
     @refresh_token = procore_token['refresh_token']
 
     # If proxy Procore request params are present, make the request
