@@ -1,24 +1,17 @@
 <!-- This code is intended to be used **for training purposes only**. -->
-<head>
-  <% flash.each do |key, value| %>
-    <div class='alert alert-<%= key %>' >
-      <%= value %>
-      </div>
-  <% end %>
-</head>
 
 <table>
   <tr>
     <th>Access Token</th>
-    <th>Created At</th>
     <th>Expires At</th>
+    <th>Expires In</th>
     <th>Refresh Token
     </th>
   </tr>
   </tr>
     <td><%= @access_token[0..4] + "..." + @access_token.split(//).last(5).join%></td>
-    <td><%= @pretty_created_at %></td>
     <td><%= @pretty_expires_at %></td>
+    <td><%= @expires_in %> seconds</td>
     <td><%= @refresh_token[0..4] + "..." + @refresh_token.split(//).last(5).join %></td>
   </tr>
 </table>
@@ -40,12 +33,19 @@
 <%= form_with(url: '/users/home', method: 'get', local: true) do %>
   <div class="form-group">
     <label for="path">Path:</label>
-    <input id="path" type="text" name="path" placeholder="/rest/v1.0/me"></input>
+    <input id="path" type="text" name="path" placeholder="companies/id">
+  </div>
+
+  <div class="form-group">
+    <label for="version">Version:</label>
+    <input id="version" type="text" name="version" placeholder="v1.0">
   </div>
 
   <div class="form-group">
     <label for="body">Body:</label>
-    <input id="body" type="textarea" name="body" placeholder="{}"></input>
+    <div class="input-group">
+      <textarea id="body" name="body" placeholder="{}"></textarea>
+    </div>
   </div>
 
   <div class="form-group">
@@ -53,10 +53,12 @@
     <select id="method" type="text" name="method">
       <option value="get">GET</option>
       <option value="post">POST</option>
+      <option value="patch">PATCH</option>
+      <option value="delete">DELETE</option>
     </select>
   </div>
 
-  <input type="submit" class="btn btn-primary"></input>
+  <input type="submit" class="btn btn-primary">
 <% end %>
 
 <br/>

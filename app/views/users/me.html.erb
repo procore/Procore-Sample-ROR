@@ -6,8 +6,8 @@
     </tr>
   <div>
     <tr>
-      <td><%= @me['id'] %></td>
-      <td><%= @me['login']%></td>
+      <td><%= @me['id'] if @me %></td>
+      <td><%= @me['login'] if @me %></td>
     </tr>
 </table>
 

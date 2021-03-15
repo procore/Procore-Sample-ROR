@@ -1,7 +1,7 @@
 # README
 
 ### Setup Instructions
-This following steps are instructions to launch and view a simple Ruby on Rails application that authenticates with Procore's API using the OAuth 2.0 Authorization Code Grant Type flow. The application is configured to access either Procore's production environment or Procore's developer sandbox environment.
+The following steps are instructions to launch and view a simple Ruby on Rails application that authenticates with Procore's API using the OAuth 2.0 Authorization Code Grant Type flow. The application uses the [Procore Ruby SDK](https://github.com/procore/ruby-sdk) and [Omniauth strategy](https://github.com/procore/omniauth-procore) to simplify authentication and requests to the Procore API. It can be configured to access either Procore's production environment or Procore's developer sandbox environment.
 
 THIS REPOSITORY IS FOR TRAINING PURPOSES ONLY.
 
@@ -14,12 +14,13 @@ Within this file, configure your application's Client ID, Client Secret, and Red
 
         * CLIENT_ID: ''
         * CLIENT_SECRET: ''
-        * REDIRECT_URI: 'http://localhost:3000/login/callback'
-        * OAUTH_URL: ''
-        * BASE_URL: ''
+        * REDIRECT_URI: 'http://localhost:3000/auth/procore/callback'
+        * OAUTH_URL: 'https://login.procore.com'
+        * BASE_URL: 'https://api.procore.com'
 
-    * Client ID and Client Secret values are provided when [creating an application](https://developers.procore.com/documentation/new-application) in the Procore Developer Portal. The redirect URI above should be added to your application.
-    * The BASE_URL and the OAUTH_URL will depend on which environment you're working accessing. If you're working in the production environment, the OAUTH_URL will be https://login.procore.com and the BASE_URL will be https://api.procore.com. For the sandbox environment, both the OAUTH_URL and the BASE_URL should be set to https://sandbox.procore.com.
+    * CLIENT_ID and CLIENT_SECRET values are provided when [creating an application](https://developers.procore.com/documentation/new-application) in the Procore Developer Portal.
+    * The REDIRECT_URI's domain should match the domain of your application, and the full path must be added as an authorized redirect uri for your app in the developer portal.
+    * The BASE_URL and the OAUTH_URL will depend on which environment you're accessing. If you're working in the production environment, the OAUTH_URL will be https://login.procore.com and the BASE_URL will be https://login.procore.com. For the sandbox environment, both the OAUTH_URL and the BASE_URL should be set to https://sandbox.procore.com.
     * After these values have been configured within the `application.yml` file, make sure to save your changes.
 
 5. Navigate to the directory where the repository was cloned to and [launch your Rails server](https://guides.rubyonrails.org/command_line.html#rails-server).

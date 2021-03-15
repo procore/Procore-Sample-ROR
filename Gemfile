@@ -50,6 +50,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen'
+  gem 'pry'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -58,4 +59,7 @@ gem 'bootstrap-sass'
 gem 'figaro'
 gem 'httparty'
 gem 'rest-client'
-gem 'bootstrap'
+gem 'procore', '~> 1.1'
+gem 'omniauth'
+gem 'omniauth-procore'
+gem 'omniauth-rails_csrf_protection'

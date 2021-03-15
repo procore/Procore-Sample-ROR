@@ -1,81 +1,67 @@
 # This code is intended to be used **for training purposes only**.
 class UsersController < ApplicationController
+  before_action :ensure_logged_in
 
   def me
     # Send a request to the Show User Info endpoint
-    # Reference documentation: https://developers.procore.com/reference/me
-    get_me = RestClient.get(ENV['BASE_URL'] +'/rest/v1.0/me',
-            { Authorization: "Bearer #{session[:oauth_response]['access_token']}" })
+    request = client.get('me')
 
     # Store the parsed response in an instance variable
-    @me = JSON.parse(get_me)
+    @me = request.body
 
-    rescue RestClient::ExceptionWithResponse
-      if session[:oauth_response]
-        redirect_to users_home_path, danger: "Something went wrong. Please check or refresh your access token and try again."
-      else
-        redirect_to login_index_path, danger: "Something went wrong. Please try again."
-      end
+  rescue Procore::Error => e
+    flash[:danger] = "#{e.class}: #{e.message}"
   end
 
   def home
     # Fetch the access token from the previously-set session variable and store
     # the value in an instance variable
-    @access_token = session[:oauth_response]['access_token']
+    procore_token = JSON.parse(session['procore_token']) 
+    @access_token = procore_token['access_token']
 
-    # Fetch the 'created_at' value from the session variable, prettify it, and
-    # store the value in an instance variable
-    created_at = session[:oauth_response]['created_at']
-    @pretty_created_at = Time.at(created_at).asctime
-
-    # Fetch the 'expires_in' value from the session variable, add it to the
-    # 'created_at' value to find the time at which the access token will expire,
-    # and store the new 'expires_at' value in an instance variable
-    expires_in = session[:oauth_response]['expires_in']
-    expires_at = expires_in + created_at
+    # Fetch the 'expires_at' value from the session variable, subtract it from the
+    # current time to find the time until the access token will expire,
+    # and store the new 'expires_in' value in an instance variable
+    expires_at = procore_token['expires_at']
     @pretty_expires_at = Time.at(expires_at).asctime
+    @expires_in = expires_at - Time.now.to_i
 
     # Fetch the access token from the session variable and store the value in
     # an instance variable
-    @refresh_token = session[:oauth_response]['refresh_token']
+    @refresh_token = procore_token['refresh_token']
 
     # If proxy Procore request params are present, make the request
     if params[:path]
       begin
-        @resp = procore_request(@access_token, params[:path], params[:method], params[:body])
+        @resp = procore_request(@access_token, params[:path], params[:method], params[:body], params[:version])
       rescue => e
-        @resp = e.message
+        @resp = "#{e.class}: #{e.message}"
       end
     end
+  end
 
-    rescue RestClient::ExceptionWithResponse
-      if session[:oauth_response]
-        redirect_to users_home_path, danger: "Something went wrong. Please refresh your access token and try again."
-      else
-        redirect_to login_index_path, danger: "Something went wrong. Please try again."
+  def ensure_logged_in
+    unless session['procore_token'] 
+      redirect_to login_index_path, warning: "Please log in."
     end
   end
 
   private
 
-  def procore_request(token, path, method, body)
+  def procore_request(token, path, method, body, version)
+    version = nil if version.empty?
+
     resp = case method
-      when 'post'
-        RestClient.post(
-          ENV['BASE_URL'] + path,
-          body ? JSON.parse(body) : nil,
-          { Authorization: "Bearer #{session[:oauth_response]['access_token']}" }
-        )
       when 'get'
-        resp = RestClient.get(
-          ENV['BASE_URL'] + path,
-          { Authorization: "Bearer #{session[:oauth_response]['access_token']}" }
-        )
-      else
-        ''
+        client.get path, version: version
+      when 'post'
+        client.post path, body: JSON.parse(body), version: version
+      when 'patch'
+        client.patch path, body: JSON.parse(body), version: version
+      when 'delete'
+        client.delete path, body: JSON.parse(body), version: version
     end
 
-
-    JSON.parse(resp)
+    resp.body
   end
 end

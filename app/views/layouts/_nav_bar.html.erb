@@ -1,0 +1,9 @@
+<ul class="nav nav-tabs">
+  <% if session['procore_token'] %>
+    <li><%= link_to "Home", users_home_path %></li>
+    <li><%= link_to "Me", users_me_path %></li>
+    <li><%= link_to "Sign Out", login_revoke_path %></li>
+  <% else %>
+    <li><%= link_to "Sign In", login_index_path %></li>
+  <% end %>
+</ul>
