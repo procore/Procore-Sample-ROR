@@ -19,8 +19,8 @@ Within this file, configure your application's Client ID, Client Secret, and Red
         * BASE_URL: 'https://api.procore.com'
 
     * CLIENT_ID and CLIENT_SECRET values are provided when [creating an application](https://developers.procore.com/documentation/new-application) in the Procore Developer Portal.
-    * The REDIRECT_URI's domain should match the domain of your application, and the full path must should be added as an authorized redirect uri for your app in the developer portal.
-    * The BASE_URL and the OAUTH_URL will depend on which environment you're working accessing. If you're working in the production environment, the OAUTH_URL will be https://login.procore.com and the BASE_URL will be https://login.procore.com. For the sandbox environment, both the OAUTH_URL and the BASE_URL should be set to https://sandbox.procore.com.
+    * The REDIRECT_URI's domain should match the domain of your application, and the full path must be added as an authorized redirect uri for your app in the developer portal.
+    * The BASE_URL and the OAUTH_URL will depend on which environment you're accessing. If you're working in the production environment, the OAUTH_URL will be https://login.procore.com and the BASE_URL will be https://login.procore.com. For the sandbox environment, both the OAUTH_URL and the BASE_URL should be set to https://sandbox.procore.com.
     * After these values have been configured within the `application.yml` file, make sure to save your changes.
 
 5. Navigate to the directory where the repository was cloned to and [launch your Rails server](https://guides.rubyonrails.org/command_line.html#rails-server).
