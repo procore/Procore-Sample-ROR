@@ -9,8 +9,8 @@ class UsersController < ApplicationController
     # Store the parsed response in an instance variable
     @me = request.body
 
-  rescue Procore::Error
-    flash[:danger] = "Something went wrong. Please try again."
+  rescue Procore::Error => e
+    flash[:danger] = "#{e.class}: #{e.message}"
   end
 
   def home
@@ -35,7 +35,7 @@ class UsersController < ApplicationController
       begin
         @resp = procore_request(@access_token, params[:path], params[:method], params[:body], params[:version])
       rescue => e
-        @resp = e.message
+        @resp = "#{e.class}: #{e.message}"
       end
     end
   end

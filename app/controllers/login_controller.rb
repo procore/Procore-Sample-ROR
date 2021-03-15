@@ -4,8 +4,8 @@ require 'rest-client'
 require 'date'
 
 class LoginController < ApplicationController
-  rescue_from Procore::Error do |exception|
-    redirect_to login_index_path, danger: "Something went wrong. Please try again."
+  rescue_from Procore::Error do |e|
+    redirect_to login_index_path, danger: "#{e.class}: #{e.message}"
   end
 
   def callback
